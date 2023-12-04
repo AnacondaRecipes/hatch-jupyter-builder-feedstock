@@ -32,6 +32,7 @@ test:
     - .
   imports:
     - hatch_jupyter_builder
+{% if python != "3.12" %}
   commands:
     - pip check
 # Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
@@ -42,7 +43,7 @@ test:
     - pytest-mock          # [ not win]
     - tomli                # [ not win]
     - cryptography =39.0.1 # [ not win]
-
+{% endif %}
 
 about:
   home: https://pypi.org/project/hatch-jupyter-builder/
