@@ -11,7 +11,7 @@ source:
 
 build:
   script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation . -vv
-  number: 0
+  number: 1
 # Note s390x supressed because of conflicts installing test packages, and some
 # breakage around ffi/cffi loading
   skip: true  # [py<38 or s390x]
