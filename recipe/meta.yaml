@@ -1,5 +1,5 @@
 {% set name = "hatch-jupyter-builder" %}
-{% set version = "0.8.3" %}
+{% set version = "0.9.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hatch_jupyter_builder-{{ version }}.tar.gz
-  sha256: 0dbd14a8aef6636764f88a8fd1fcc9a91921e5c50356e6aab251782f264ae960
+  sha256: 79278198d124c646b799c5e8dca8504aed9dcaaa88d071a09eb0b5c2009a58ad
 
 build:
   script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation . -vv
@@ -20,30 +20,26 @@ requirements:
   host:
     - pip
     - python
-    - hatchling >=1.5
+    - hatchling >=1.17
     - wheel
   run:
     - python
-    - hatchling >=1.5
-
+    - hatchling >=1.17
 
 test:
   source_files:
     - .
   imports:
     - hatch_jupyter_builder
-{% if python != "3.12" %}
   commands:
     - pip check
-# Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
+    # Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
     - python -m pytest -vv     # [not (win or s390x)]
   requires:
     - pip
-    - pytest               # [ not win]
-    - pytest-mock          # [ not win]
-    - tomli                # [ not win]
-    - cryptography =39.0.1 # [ not win]
-{% endif %}
+    - pytest
+    - pytest-mock
+    - tomli
 
 about:
   home: https://pypi.org/project/hatch-jupyter-builder/
