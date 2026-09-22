@@ -1,30 +1,30 @@
 {% set name = "hatch-jupyter-builder" %}
-{% set version = "0.9.1" %}
+{% set version = "0.10.0" %}
 
+# Note s390x supressed because of conflicts installing test packages, and some
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hatch_jupyter_builder-{{ version }}.tar.gz
-  sha256: 79278198d124c646b799c5e8dca8504aed9dcaaa88d071a09eb0b5c2009a58ad
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/hatch_jupyter_builder-{{ version }}.tar.gz
+  sha256: 144f6a7afd7f837071eca81141313d736643be4f6734b45f30661bcb922bd80a
 
 build:
   script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation . -vv
   number: 0
-# Note s390x supressed because of conflicts installing test packages, and some
-# breakage around ffi/cffi loading
-  skip: true  # [py<38 or s390x]
+  skip: true  # [py<310]
 
 requirements:
   host:
     - pip
     - python
     - hatchling >=1.17
-    - wheel
+    - jupyter_packaging
   run:
     - python
     - hatchling >=1.17
+    - ipywidgets >=7.0.0
 
 test:
   source_files:
@@ -34,7 +34,7 @@ test:
   commands:
     - pip check
     # Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
-    - python -m pytest -vv     # [not (win or s390x)]
+    - python -m pytest -vv  # [not (win or s390x)]
   requires:
     - pip
     - pytest
@@ -55,3 +55,6 @@ extra:
   recipe-maintainers:
     - blink1073
     - zsailer
+
+<conda_recipe_manager.types.SentinelType object at 0x7f06902d6270>:  # breakage around ffi/cffi loading
+  skip: true  # [py<38 or s390x]
