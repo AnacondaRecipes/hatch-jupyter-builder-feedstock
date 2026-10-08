@@ -2,7 +2,7 @@
 {% set version = "0.10.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -12,9 +12,7 @@ source:
 build:
   script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation . -vv
   number: 0
-# Note s390x supressed because of conflicts installing test packages, and some
-# breakage around ffi/cffi loading
-  skip: true  # [py<310 or s390x]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -34,7 +32,7 @@ test:
   commands:
     - pip check
     # Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
-    - python -m pytest -vv     # [not (win or s390x)]
+    - python -m pytest -vv     # [not win]
   requires:
     - pip
     - pytest
