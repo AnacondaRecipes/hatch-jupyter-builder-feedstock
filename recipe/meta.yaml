@@ -31,6 +31,7 @@ test:
     - hatch_jupyter_builder
   commands:
     - pip check
+    - hatch-jupyter-builder --help
     # Note windows tests supressed because of problems with utils.run(shlex.split(cmd))
     - python -m pytest -vv     # [not win]
   requires:
